@@ -3,11 +3,13 @@ import logo from './logo.svg';
 import {Counter} from './features/counter/Counter';
 import './App.css';
 import {Signup} from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login";
 
 function App() {
     return (
         <div className="App">
-            <Signup />
+            {/*<Signup />*/}
+            <Login />
             {/*<header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
                 <Counter/>
