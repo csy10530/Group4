@@ -7,10 +7,11 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
-import Form from "@mui/material/FormControl"
 
 import {selectMockUsers} from "../Signup/signupSlice";
-import {useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {setCurrentUser} from "../Home/homeSlice";
+import {useNavigate} from "react-router-dom";
 
 /*const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -98,10 +99,12 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const Login = () => {
-    //const classes = makeStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
     const mockUsers: Array<any> = useAppSelector(selectMockUsers);
 
+    const homeDispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (state.username.trim() && state.password.trim()) {
@@ -130,6 +133,8 @@ const Login = () => {
                 type: 'loginSuccess',
                 payload: 'Login Successfully'
             });
+            homeDispatch(setCurrentUser(state.username));
+            navigate("/");
         } else {
             dispatch({
                 type: 'loginFailed',

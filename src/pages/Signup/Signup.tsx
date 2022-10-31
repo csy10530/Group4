@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {register, selectMockUsers} from "./signupSlice";
+import {register} from "./signupSlice";
 
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import Button from "@mui/material/Button"
 import TextField from '@mui/material/TextField';
+import {useNavigate} from "react-router-dom";
+import {setCurrentUser} from "../Home/homeSlice";
 
 const SignupSchema = yup.object().shape({
     firstName: yup.string()
@@ -22,15 +24,15 @@ const SignupSchema = yup.object().shape({
     password: yup.string()
         .min(5, "Too short")
         .max(15, "Too long")
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{5,15})/,
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{5,15})/,
             "Must between 5 to 15 characters, one uppercase, one lowercase, one number and one special character")
         .required("Required"),
     email: yup.string().email("Invalid email").required("Required")
 });
 
 export const Signup: React.FC<{}> = () => {
-    const mockUsers = useAppSelector(selectMockUsers);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -44,6 +46,8 @@ export const Signup: React.FC<{}> = () => {
         validationSchema: SignupSchema,
         onSubmit: (values) => {
             dispatch(register(values));
+            dispatch(setCurrentUser(values.email));
+            navigate("/");
         },
     });
 
@@ -105,15 +109,6 @@ export const Signup: React.FC<{}> = () => {
                 <Button color="primary" variant="contained" type="submit">
                     Create Account
                 </Button>
-
-                <div>{mockUsers.map(user => {
-                    return <div>
-                        <span>{user.firstName} </span>
-                        <span>{user.lastName} </span>
-                        <span>{user.password} </span>
-                        <span>{user.email} </span>
-                    </div>
-                })}</div>
             </form>
         </div>
     );
