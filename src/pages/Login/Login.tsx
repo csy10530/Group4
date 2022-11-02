@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react';
-import { createStyles, Theme, styled } from '@mui/material/styles';
 
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
@@ -12,6 +11,7 @@ import {selectMockUsers} from "../Signup/signupSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {setCurrentUser} from "../Home/homeSlice";
 import {useNavigate} from "react-router-dom";
+import {createTheme} from "@mui/material";
 
 /*const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -105,6 +105,7 @@ const Login = () => {
     const homeDispatch = useAppDispatch();
 
     const navigate = useNavigate();
+    const theme = createTheme();
 
     useEffect(() => {
         if (state.username.trim() && state.password.trim()) {
@@ -168,11 +169,11 @@ const Login = () => {
         <form  noValidate autoComplete="off" style={{display: 'flex',
             flexWrap: 'wrap',
             width: 400,
-            margin: "auto"}}>
+            margin: `${theme.spacing(0)} auto`}}>
             <Card sx={{
-                marginTop: "auto"
+                marginTop: theme.spacing(10)
             }}>
-                <CardHeader  title="Login App" sx={{
+                <CardHeader  title="Login" sx={{
                     textAlign: 'center',
                     background: '#212121',
                     color: '#fff'
@@ -213,7 +214,7 @@ const Login = () => {
                         onClick={handleLogin}
                         disabled={state.isButtonDisabled}
                         sx={{
-                            marginTop: "auto",
+                            marginTop: theme.spacing(2),
                             flexGrow: 1
                         }}
                     >
