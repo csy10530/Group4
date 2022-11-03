@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react';
-import { createStyles, Theme, styled } from '@mui/material/styles';
 
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
@@ -7,35 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Button from '@mui/material/Button';
-import Form from "@mui/material/FormControl"
 
 import {selectMockUsers} from "../Signup/signupSlice";
-import {useAppSelector} from "../../app/hooks";
-
-/*const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            width: 400,
-            margin: `${theme.spacing(0)} auto`
-        },
-        loginBtn: {
-            marginTop: theme.spacing(2),
-            flexGrow: 1
-        },
-        header: {
-            textAlign: 'center',
-            background: '#212121',
-            color: '#fff'
-        },
-        card: {
-            marginTop: theme.spacing(10)
-        }
-    })
-);*/
-
-//state type
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {setCurrentUser} from "../Home/homeSlice";
+import {useNavigate} from "react-router-dom";
+import {createTheme} from "@mui/material";
 
 type State = {
     username: string
@@ -98,10 +74,13 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const Login = () => {
-    //const classes = makeStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
     const mockUsers: Array<any> = useAppSelector(selectMockUsers);
 
+    const homeDispatch = useAppDispatch();
+
+    const navigate = useNavigate();
+    const theme = createTheme();
 
     useEffect(() => {
         if (state.username.trim() && state.password.trim()) {
@@ -130,6 +109,8 @@ const Login = () => {
                 type: 'loginSuccess',
                 payload: 'Login Successfully'
             });
+            homeDispatch(setCurrentUser(state.username));
+            navigate("/");
         } else {
             dispatch({
                 type: 'loginFailed',
@@ -163,11 +144,11 @@ const Login = () => {
         <form  noValidate autoComplete="off" style={{display: 'flex',
             flexWrap: 'wrap',
             width: 400,
-            margin: "auto"}}>
+            margin: `${theme.spacing(0)} auto`}}>
             <Card sx={{
-                marginTop: "auto"
+                marginTop: theme.spacing(10)
             }}>
-                <CardHeader  title="Login App" sx={{
+                <CardHeader  title="Login" sx={{
                     textAlign: 'center',
                     background: '#212121',
                     color: '#fff'
@@ -208,7 +189,7 @@ const Login = () => {
                         onClick={handleLogin}
                         disabled={state.isButtonDisabled}
                         sx={{
-                            marginTop: "auto",
+                            marginTop: theme.spacing(2),
                             flexGrow: 1
                         }}
                     >

@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
 
-export interface LoginState {
+export interface SignupState {
     status: boolean;
     mockUsers: Array<any>;
 }
 
-const initialState: LoginState = {
+const initialState: SignupState = {
     status: false,
     mockUsers: [{
         firstName: "test1",
@@ -48,6 +48,7 @@ export const signupSlice = createSlice({
                 }
             }
             if (!userExists) {
+                state.status = true;
                 state.mockUsers.push(action.payload);
             }
         }
