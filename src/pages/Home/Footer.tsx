@@ -14,7 +14,7 @@ const Footer: React.FC<{}> = () => {
                 <Container maxWidth="lg">
                     <Grid container spacing={5}>
                         <Grid item xs={12} sm={4}>
-                            <Box borderBottom={1}>Customer Service</Box>
+                            <Box borderBottom={1} style={{ marginBottom: 16 }}>Customer Service</Box>
                             <Box>
                                 <Link color="inherit">Contact Us</Link>
                             </Box>
@@ -30,7 +30,7 @@ const Footer: React.FC<{}> = () => {
                         </Grid>
 
                         <Grid item xs={12} sm={4}>
-                            <Box borderBottom={1}>Account</Box>
+                            <Box borderBottom={1} style={{ marginBottom: 16 }}>Account</Box>
                             <Box>
                                 <Link color="inherit">Login</Link>
                             </Box>
@@ -40,7 +40,7 @@ const Footer: React.FC<{}> = () => {
                         </Grid>
 
                         <Grid item xs={12} sm={4}>
-                            <Box borderBottom={1}>About Us</Box>
+                            <Box borderBottom={1} style={{ marginBottom: 16 }}>About Us</Box>
                             <Box>
                                 <Link color="inherit">Corporate Sales</Link>
                             </Box>

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useAppDispatch, useAppSelector} from "../../app/hooks"
-import {logout, selectCurrentUser, selectStatus} from "./homeSlice";
-import {CssBaseline} from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { logout, selectCurrentUser, selectStatus } from "./homeSlice";
+import { CssBaseline } from "@mui/material";
 import NavigationBar from "../../components/Navigation";
 import BannerCarousel from "../../components/BannerCarousel/BannerCarousel";
 import "./Home.scss";
@@ -33,9 +33,9 @@ const Home: React.FC<{}> = () => {
 
     return (
         <React.Fragment>
-            <CssBaseline/>
-            <NavigationBar loginStatus={loginStatus} currentUser={currentUser} handleLogout={handleLogout}/>
-            <BannerCarousel/>
+            <CssBaseline />
+            <NavigationBar loginStatus={loginStatus} currentUser={currentUser} handleLogout={handleLogout} />
+            <BannerCarousel />
 
             <div id="dealsBannerContainer">
                 <a>
@@ -49,31 +49,31 @@ const Home: React.FC<{}> = () => {
                 <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={womenCoats}/>
+                            <img src={womenCoats} />
                         </div>
                     </a>
                 </div>
 
-                <div>
+                <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={womenBoots}/>
+                            <img src={womenBoots} />
                         </div>
                     </a>
                 </div>
 
-                <div>
+                <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={designerSuits}/>
+                            <img src={designerSuits} />
                         </div>
                     </a>
                 </div>
 
-                <div>
+                <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={luggage}/>
+                            <img src={luggage} />
                         </div>
                     </a>
                 </div>
@@ -83,28 +83,28 @@ const Home: React.FC<{}> = () => {
                 <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={fineJewelry}/>
+                            <img src={fineJewelry} />
                         </div>
                     </a>
                 </div>
                 <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={menCoats}/>
+                            <img src={menCoats} />
                         </div>
                     </a>
                 </div>
                 <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={handbags}/>
+                            <img src={handbags} />
                         </div>
                     </a>
                 </div>
                 <div className="discountProductCard">
                     <a>
                         <div>
-                            <img src={winterBlankets}/>
+                            <img src={winterBlankets} />
                         </div>
                     </a>
                 </div>
@@ -113,7 +113,7 @@ const Home: React.FC<{}> = () => {
             <div id="blackFridayContainer">
                 <a>
                     <div>
-                        <img src={blackFridayBanner}/>
+                        <img src={blackFridayBanner} />
                     </div>
                 </a>
             </div>
@@ -121,7 +121,7 @@ const Home: React.FC<{}> = () => {
             <div id="ralphLaurenContainer">
                 <a>
                     <div>
-                        <img src={ralphLauren}/>
+                        <img src={ralphLauren} />
                     </div>
                 </a>
             </div>
