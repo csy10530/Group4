@@ -1,31 +1,42 @@
 import React from "react";
-import {Link, Stack, Toolbar} from "@mui/material";
-
+import { Link, Toolbar } from "@mui/material";
 import Women from "./Dropdowns/Women";
+import './NavLinks.scss'
 
 const navItems = ["Women", "Men", "Kids", "Beauty", "Shoes", "Furniture", "Gifts", "Trending", "Sale"];
 
 const NavLinks: React.FC<{}> = () => {
+    const [showNavItem, setShowNavItem] = React.useState<Boolean>(false)
+
     return (
-        <Toolbar>
-            <Stack direction="row" spacing={2}>
+        <div
+            style={{ padding: '16px 24px', position: 'relative' }}
+            onMouseEnter={() => {
+                setShowNavItem(true)
+            }}
+            onMouseLeave={() => {
+                setShowNavItem(false)
+            }} >
+            <div className="link-wrap">
                 {navItems.map((content, idx) => {
                     return (
-                        <React.Fragment>
-                            <Link
-                                key={content + idx}
-                                sx={{color: content === "Sale" ? "red" : "black", cursor: "pointer"}}
-                                underline="hover"
-                            >
-                                {content}
-                            </Link>
-
-                            <Women />
-                        </React.Fragment>
+                        <Link
+                            key={content + idx}
+                            sx={{ color: content === "Sale" ? "red" : "black", cursor: "pointer" }}
+                            underline="hover"
+                        >
+                            {content}
+                        </Link>
                     )
                 })}
-            </Stack>
-        </Toolbar>
+            </div>
+            {
+                showNavItem ? <div className="popup" >
+                    <Women />
+                </div> : null
+            }
+
+        </div>
     )
 }
 
