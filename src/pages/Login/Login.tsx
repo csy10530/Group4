@@ -12,134 +12,64 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {setCurrentUser} from "../Home/homeSlice";
 import {useNavigate} from "react-router-dom";
 import {createTheme} from "@mui/material";
-
-type State = {
-    username: string
-    password:  string
-    isButtonDisabled: boolean
-    helperText: string
-    isError: boolean
-};
-
-const initialState:State = {
-    username: '',
-    password: '',
-    isButtonDisabled: true,
-    helperText: '',
-    isError: false
-};
-
-type Action = { type: 'setUsername', payload: string }
-    | { type: 'setPassword', payload: string }
-    | { type: 'setIsButtonDisabled', payload: boolean }
-    | { type: 'loginSuccess', payload: string }
-    | { type: 'loginFailed', payload: string }
-    | { type: 'setIsError', payload: boolean };
-
-const reducer = (state: State, action: Action): State => {
-    switch (action.type) {
-        case 'setUsername':
-            return {
-                ...state,
-                username: action.payload
-            };
-        case 'setPassword':
-            return {
-                ...state,
-                password: action.payload
-            };
-        case 'setIsButtonDisabled':
-            return {
-                ...state,
-                isButtonDisabled: action.payload
-            };
-        case 'loginSuccess':
-            return {
-                ...state,
-                helperText: action.payload,
-                isError: false
-            };
-        case 'loginFailed':
-            return {
-                ...state,
-                helperText: action.payload,
-                isError: true
-            };
-        case 'setIsError':
-            return {
-                ...state,
-                isError: action.payload
-            };
-    }
-}
+import {RootState} from "../../app/store";
+import {
+    loginUser,
+    selectHelperText,
+    selectIsButtonDisabled,
+    selectIsError,
+    selectPassword, selectLoginStatus,
+    selectUsername
+} from "./loginSlice";
+import {setUsername, setPassword, setIsButtonDisabled, loginSuccess, loginFailed, setIsError} from "./loginSlice";
 
 const Login = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const mockUsers: Array<any> = useAppSelector(selectMockUsers);
+    const loginUsername: string = useAppSelector(selectUsername);
+    const loginPassword: string = useAppSelector(selectPassword);
+    const loginIsButtonDisabled: boolean = useAppSelector(selectIsButtonDisabled);
+    const loginHelperText: string = useAppSelector(selectHelperText);
+    const loginIsError: boolean = useAppSelector(selectIsError);
+    const loginStatus: string = useAppSelector(selectLoginStatus);
 
-    const homeDispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
     const theme = createTheme();
 
     useEffect(() => {
-        if (state.username.trim() && state.password.trim()) {
-            dispatch({
-                type: 'setIsButtonDisabled',
-                payload: false
-            });
+        if (loginUsername.trim() && loginPassword.trim()) {
+            dispatch(setIsButtonDisabled(false));
         } else {
-            dispatch({
-                type: 'setIsButtonDisabled',
-                payload: true
-            });
+            dispatch(setIsButtonDisabled(true));
         }
-    }, [state.username, state.password]);
+    }, [loginUsername, loginPassword]);
 
-    const handleLogin = () => {
-        let userExists = false;
-        for (let i = 0; i < mockUsers.length; i++) {
-            if (mockUsers[i].email === state.username && mockUsers[i].password === state.password) {
-                userExists = true;
+    useEffect(() => {
+        if (loginUsername.trim() && loginPassword.trim()) {
+            if (loginStatus === "success") {
+                dispatch(loginSuccess('Login Successfully'));
+                dispatch(setCurrentUser(loginUsername));
+                navigate("/");
+            } else if (loginStatus === "failed") {
+                dispatch(loginFailed("Incorrect username or password"));
             }
         }
+    }, [loginStatus])
 
-        if (userExists) {
-            dispatch({
-                type: 'loginSuccess',
-                payload: 'Login Successfully'
-            });
-            homeDispatch(setCurrentUser(state.username));
-            navigate("/");
-        } else {
-            dispatch({
-                type: 'loginFailed',
-                payload: 'Incorrect username or password'
-            });
-        }
-    };
-
-    const handleKeyPress = (event: React.KeyboardEvent) => {
-        if (event.keyCode === 13 || event.which === 13) {
-            state.isButtonDisabled || handleLogin();
-        }
+    const handleLogin = () => {
+        dispatch(loginUser({username: loginUsername, password: loginPassword}))
     };
 
     const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
-            dispatch({
-                type: 'setUsername',
-                payload: event.target.value
-            });
+            dispatch(setUsername(event.target.value));
         };
 
     const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> =
         (event) => {
-            dispatch({
-                type: 'setPassword',
-                payload: event.target.value
-            });
+            dispatch(setPassword(event.target.value));
         }
+
     return (
         <form  noValidate autoComplete="off" style={{display: 'flex',
             flexWrap: 'wrap',
@@ -156,7 +86,7 @@ const Login = () => {
                 <CardContent>
                     <div>
                         <TextField
-                            error={state.isError}
+                            error={loginIsError}
                             fullWidth
                             id="username"
                             type="email"
@@ -164,19 +94,17 @@ const Login = () => {
                             placeholder="Username"
                             margin="normal"
                             onChange={handleUsernameChange}
-                            onKeyPress={handleKeyPress}
                         />
                         <TextField
-                            error={state.isError}
+                            error={loginIsError}
                             fullWidth
                             id="password"
                             type="password"
                             label="Password"
                             placeholder="Password"
                             margin="normal"
-                            helperText={state.helperText}
+                            helperText={loginHelperText}
                             onChange={handlePasswordChange}
-                            onKeyPress={handleKeyPress}
                         />
                     </div>
                 </CardContent>
@@ -187,7 +115,7 @@ const Login = () => {
                         color="secondary"
 
                         onClick={handleLogin}
-                        disabled={state.isButtonDisabled}
+                        disabled={loginIsButtonDisabled}
                         sx={{
                             marginTop: theme.spacing(2),
                             flexGrow: 1

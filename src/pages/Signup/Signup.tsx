@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import {useAppDispatch} from "../../app/hooks";
-import {register} from "./signupSlice";
+import {registerUser} from "./signupSlice";
 
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -51,7 +51,7 @@ export const Signup: React.FC<{}> = () => {
         },
         validationSchema: SignupSchema,
         onSubmit: (values) => {
-            dispatch(register(values));
+            dispatch(registerUser(values));
             dispatch(setCurrentUser(values.email));
             navigate("/");
         },

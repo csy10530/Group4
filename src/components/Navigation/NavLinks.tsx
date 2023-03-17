@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Toolbar } from "@mui/material";
-import Women from "./Dropdowns/Women";
+import Women from "../Dropdowns/Women";
 import './NavLinks.scss'
 
 const navItems = ["Women", "Men", "Kids", "Beauty", "Shoes", "Furniture", "Gifts", "Trending", "Sale"];

@@ -24,12 +24,10 @@ const BannerCarousel:React.FC<{}> = () => {
             autoPlay={true}
             autoPlaySpeed={5000}
         >
-            {bannerData.map((item) => (
-                <img src={item} alt="" />
+            {bannerData.map((item, idx) => (
+                <img key={idx} src={item} alt="" />
             ))}
         </Carousel>
-
-
     )
 }
 
