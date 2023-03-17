@@ -22,7 +22,7 @@ interface UserRegisterInfo {
 export const registerUser = createAsyncThunk("users/register",
     async (userInfo: UserRegisterInfo, thunkAPI) => {
         const api = axios.create({withCredentials: true});
-        const res = await api.post("https://ec2-44-214-134-68.compute-1.amazonaws.com:4000/api/register", {
+        const res = await api.post("http://ec2-44-214-134-68.compute-1.amazonaws.com:4000/api/register", {
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
             email: userInfo.email,
