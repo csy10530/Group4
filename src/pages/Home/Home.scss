@@ -1,0 +1,16 @@
+.discountProductContainer {
+  display: flex;
+  justify-content: space-between;
+  .discountProductCard {
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+}
+.dealsBannerContainer {
+  margin-top: 16px;
+}
+
+.newProductsContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
