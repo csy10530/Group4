@@ -23,7 +23,7 @@ interface ProductInfo {
 export const createProduct = createAsyncThunk("users/upload",
     async (product: ProductInfo, thunkAPI) => {
         const api = axios.create({withCredentials: true});
-        const res = await api.post("http://localhost:4000/users/63b791f409cc0c3c455e3826/products", {
+        const res = await api.post("http://ec2-44-214-134-68.compute-1.amazonaws.com:4000/users/63b791f409cc0c3c455e3826/products", {
             name: product.name,
             description: product.description,
             price: product.price,
