@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk("users/login",
         loginData.append("username", userInfo.username);
         loginData.append("password", userInfo.password);*/
 
-        const res = await axios.post("http://ec2-44-214-134-68.compute-1.amazonaws.com:4000/api/login", {
+        const res = await axios.post("https://ec2-44-214-134-68.compute-1.amazonaws.com:4000/api/login", {
             email: userInfo.username,
             password: userInfo.password
         });
